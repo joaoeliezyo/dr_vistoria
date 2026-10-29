@@ -57,3 +57,14 @@ O progresso geral e por ambiente considera somente itens ativos e avaliados. **N
 Na constatação A, **Original / Anotada** alterna uma sobreposição ilustrativa com descrição textual, preservando o arquivo da fotografia. Na planta, o filtro por ambiente mantém marcadores e lista textual equivalentes. O botão de marcador temporário inclui um único ponto D na Sala e oferece desfazer; adicioná-lo seleciona a Sala para deixá-lo visível. Nada disso modifica o laudo HTML: ele continua representando o cenário fixo A/B/C.
 
 Não há editor de imagens, diagnóstico, captura, upload, armazenamento ou sincronização. Recarregar apaga as alterações. Capturas e verificações desta etapa estão em `artifacts/prompt-04/`; histórico, portal de cliente e novos estados de sincronização ficam fora desta etapa.
+
+## Extensão demonstrativa — Prompt 05
+Em **Solicitações e agenda → Clientes e imóveis**, a ficha distingue cliente, imóvel, solicitação, vistoria e documentos. Os botões **Ficha / Histórico / Documentos** alternam visualizações locais. O histórico usa datas fictícias: um atendimento anterior DEMO-H01 aparece separado do cenário atual DEMO-001; a proposta de agenda acompanha a confirmação visual pelo engenheiro.
+
+A relação documental mostra **Prévia disponível** (laudo HTML fixo), **Não emitida** (referência à ART) e **Pendente · exemplo não disponível** (anexo complementar fictício). Somente a prévia HTML pode ser aberta; não existem downloads ou arquivos de ART/anexo. O laudo oferece retorno direto à ficha na seção Documentos.
+
+**Prévia do acesso do cliente**, disponível na ficha/documentos e no laudo, abre um diálogo limitado ao Apartamento Modelo 302 e à Vistoria DEMO-001. **Voltar à visão administrativa** ou Escape fecha o diálogo e devolve o foco ao controle de origem. É possível abrir o laudo a partir dessa prévia e retornar à prévia ou à ficha.
+
+Não há login, autorização, link público, token, envio, compartilhamento seguro, upload, download, documento real ou persistência. A prévia não representa segurança implementada. Todas as entidades e relações vêm de `data.js`; a confirmação e as seções são estados locais, reiniciados ao recarregar. Os modelos de checklist, anotação fotográfica, filtros e marcador temporário do Prompt 04 permanecem demonstrativos; o laudo não acompanha suas edições.
+
+Capturas e relatório desta etapa: `artifacts/prompt-05/VERIFICACAO.md`. Validar com o engenheiro os campos da ficha, a leitura do histórico, os estados documentais e o conteúdo que faria sentido apresentar ao cliente. O Prompt 06 não faz parte desta entrega.

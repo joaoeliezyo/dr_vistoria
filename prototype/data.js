@@ -125,3 +125,26 @@ window.demoData = {
     }
   ]
 };
+
+/* Entidades da gestão ilustrativa derivadas do cenário único já aprovado. */
+window.demoData.management = (() => {
+  const { scenario, inspection, report } = window.demoData;
+  const client = { id: "CLIENTE-DEMO-001", name: scenario.client };
+  const property = { id: "IMOVEL-DEMO-001", name: scenario.property, location: scenario.location, type: "Apartamento residencial · exemplo", clientId: client.id };
+  const request = { id: scenario.request, clientId: client.id, propertyId: property.id, services: scenario.services, preference: scenario.preference };
+  return {
+    client, property, request,
+    inspection: { id: inspection.id, propertyId: property.id, requestId: request.id },
+    history: [
+      { date: "10 de junho", type: "Vistoria anterior", title: "Atendimento histórico de exemplo", reference: "Vistoria DEMO-H01", description: "Registro anterior fictício encerrado, distinto da vistoria DEMO-001. Não representa visita real nem integra o laudo atual.", status: "Encerrado · exemplo" },
+      { date: "15 de junho", type: "Solicitação", title: "Interesse em dois serviços", reference: request.id, description: "Pedido fictício vinculado ao cliente e ao imóvel desta ficha.", status: "Recebida · simulação" },
+      { date: "16 de junho", type: "Negociação", title: "Alinhamento com o engenheiro", reference: request.id, description: "Preferência de período discutida no canal representado. Nenhuma mensagem é enviada.", status: "Em negociação · simulação", confirmedStatus: "Alinhamento concluído · simulação" },
+      { date: "18 de junho", type: "Agendamento", title: "Proposta para a vistoria", reference: inspection.id, description: "A preferência do cliente não reserva horário; a confirmação depende do engenheiro.", status: "Proposta · aguardando confirmação", confirmedStatus: "Confirmado pelo engenheiro · simulação" }
+    ],
+    documents: [
+      { id: report.id, title: "Laudo técnico ilustrativo", status: "Prévia disponível", description: "Leitura HTML do cenário fixo A/B/C. EXEMPLO SEM VALIDADE TÉCNICA; não reflete edições do checklist.", available: true },
+      { id: "ART · área reservada", title: "Referência à ART", status: "Não emitida", description: "Sem número, registro, assinatura ou arquivo de ART. Apenas referência visual.", available: false },
+      { id: "ANEXO-DEMO-001", title: "Anexo complementar fictício", status: "Pendente · exemplo não disponível", description: "Espaço reservado para discutir um complemento documental. Nenhum arquivo foi produzido ou anexado.", available: false }
+    ]
+  };
+})();

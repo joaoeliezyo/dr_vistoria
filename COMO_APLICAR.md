@@ -1,9 +1,9 @@
-# Instalação da Etapa 04
+# Como aplicar — Etapa 05
 
-Copie `prompts/04_VISTORIA_AVANCADA.md` para a pasta `prompts/` do repositório e `docs/EXTENSAO-PROTOTIPO.md` e `docs/ACEITE-PROMPT-04.md` para `docs/`.
+Extraia o ZIP e copie os conteúdos das pastas `docs/` e `prompts/` para as pastas de mesmo nome na raiz do repositório `dr_vistoria`.
+
+Não substitua `AGENTS.md`, `prototype/` nem `typography.css`.
 
 Inicie o Codex na raiz do repositório e envie:
 
-> Leia `AGENTS.md`, `README.md`, `docs/ESCOPO-PROTOTIPO.md`, `docs/DESIGN-BRIEF.md`, `docs/EXTENSAO-PROTOTIPO.md`, `docs/ACEITE-PROMPT-04.md` e `prompts/04_VISTORIA_AVANCADA.md`. Execute **apenas** o Prompt 04. Preserve o refinamento tipográfico que já está no projeto, não avance para o Prompt 05, não faça commit nem push. Apresente testes, capturas e limitações ao terminar.
-
-Ao finalizar, revise as capturas e os resultados; só depois faça commit e sincronize.
+> Leia `AGENTS.md`, `README.md`, `docs/EXTENSAO-PROTOTIPO-05.md`, `docs/ACEITE-PROMPT-05.md` e `prompts/05_GESTAO_E_CLIENTE.md`, além dos demais documentos exigidos pelo prompt. Execute exclusivamente o Prompt 05, preserve a tipografia e os fluxos existentes, rode os testes em 1440×900 e 390×844, gere capturas e `artifacts/prompt-05/VERIFICACAO.md`. Não avance para o Prompt 06 nem faça commit/push. Ao finalizar, apresente alterações, testes e limitações.
