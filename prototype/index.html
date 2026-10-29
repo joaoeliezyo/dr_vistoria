@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#102653">
+    <meta name="description" content="Fundação navegável do protótipo visual dr_vistoria, com dados fictícios.">
+    <title>dr_vistoria — demonstração visual</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <div class="brand-block">
+          <a class="brand" href="#site" aria-label="dr_vistoria, ir para Site institucional">
+            <span class="brand-mark" aria-hidden="true">dv<span>.</span></span>
+            <span><strong>dr_vistoria</strong><small>marca provisória</small></span>
+          </a>
+          <p class="brand-caption">Engenharia com clareza, do primeiro contato à leitura do laudo.</p>
+        </div>
+        <nav class="main-nav" aria-label="Áreas da demonstração" id="main-nav"></nav>
+        <div class="sidebar-foot">
+          <span class="sidebar-foot-label">Protótipo visual</span>
+          <p>Fundação para validação de navegação e linguagem visual.</p>
+        </div>
+      </aside>
+
+      <div class="workspace">
+        <header class="topbar">
+          <button class="menu-button" id="menu-button" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Abrir menu">
+            <span aria-hidden="true">☰</span> <span>Menu</span>
+          </button>
+          <div class="topbar-title"><span class="eyebrow">Protótipo de validação</span><strong id="topbar-area">Site institucional</strong></div>
+          <span class="demo-label">Demonstração visual <span aria-hidden="true">•</span> dados fictícios</span>
+        </header>
+        <main id="conteudo" tabindex="-1"></main>
+        <footer class="page-footer"><span>dr_vistoria <span aria-hidden="true">·</span> marca provisória</span><span>Conteúdo ilustrativo, sem validade técnica.</span></footer>
+      </div>
+    </div>
+  </body>
+</html>

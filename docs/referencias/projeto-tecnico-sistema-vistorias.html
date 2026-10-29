@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projeto Técnico - Sistema de Vistorias</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#20242a;--muted:#667085;--line:#dfe3e8;--accent:#2457d6;--soft:#eef3ff;--ok:#16794b;--warn:#9a6700}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:#172033;color:#fff;padding:48px 24px}
+header .wrap,main{max-width:1120px;margin:auto}
+h1{font-size:34px;margin:0 0 8px}
+h2{font-size:25px;margin:42px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+h3{font-size:18px;margin-top:26px}
+p{margin:8px 0 14px}
+.lead{font-size:17px;color:#d8deea;max-width:850px}
+.badge{display:inline-block;padding:4px 9px;border-radius:999px;background:#2b3a58;color:#fff;font-size:12px;margin-top:12px}
+main{padding:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.kpi strong{display:block;font-size:25px}
+.kpi span{color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f0f2f5}
+tr:last-child td{border-bottom:0}
+code{background:#f0f2f5;padding:2px 5px;border-radius:4px}
+pre{background:#111827;color:#e5e7eb;padding:18px;border-radius:10px;overflow:auto;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+ul{padding-left:22px}
+.note{border-left:4px solid var(--accent);background:var(--soft);padding:12px 16px;margin:14px 0}
+.warning{border-left-color:#c58b00;background:#fff8e1}
+.small{font-size:13px;color:var(--muted)}
+.priority{font-weight:700}
+footer{max-width:1120px;margin:20px auto 50px;padding:0 24px;color:var(--muted);font-size:13px}
+@media print{body{background:#fff}header{padding:30px 0}.card,table{box-shadow:none}main{padding:0}h2{break-after:avoid}table,pre{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>Projeto Técnico</h1>
+<p class="lead">Sistema web/PWA offline-first para gestão de vistorias técnicas, destinado inicialmente a um único engenheiro e seus clientes.</p>
+<span class="badge">V1 • Monólito modular • Offline-first • Storage privado</span>
+</div>
+</header>
+
+<main>
+<section>
+<h2>1. Visão geral</h2>
+<div class="card">
+<p>O sistema tem como objetivo apoiar o ciclo completo de uma vistoria: divulgação do serviço, solicitação pelo cliente, agendamento, execução em campo, coleta de dados e fotografias, sincronização posterior, geração do laudo em PDF e disponibilização dos documentos ao cliente.</p>
+<div class="note"><strong>Premissa central:</strong> a etapa de vistoria deve funcionar sem conexão com a Internet. A conectividade será usada para sincronizar os dados quando estiver disponível.</div>
+</div>
+<div class="grid">
+<div class="card kpi"><strong>1</strong><span>Engenheiro administrativo</span></div>
+<div class="card kpi"><strong>2</strong><span>Perfis principais: engenheiro e cliente</span></div>
+<div class="card kpi"><strong>Offline</strong><span>Obrigatório durante a vistoria</span></div>
+<div class="card kpi"><strong>Privado</strong><span>Storage sem acesso público</span></div>
+</div>
+</section>
+
+<section>
+<h2>2. Escopo da V1</h2>
+<table>
+<tr><th>Funcionalidade</th><th>Prioridade</th><th>Observação</th></tr>
+<tr><td>Landing page</td><td class="priority">Alta</td><td>Apresentação profissional, serviços, regiões e chamada para solicitação.</td></tr>
+<tr><td>Solicitação de vistoria</td><td class="priority">Alta</td><td>Dados do cliente, imóvel, serviço e preferência de atendimento.</td></tr>
+<tr><td>Agenda e disponibilidade</td><td class="priority">Alta</td><td>Horários de trabalho, bloqueios e compromissos.</td></tr>
+<tr><td>Tabela de preços</td><td>Média</td><td>Opcional; pode ser ocultada para permitir orçamento individual.</td></tr>
+<tr><td>Autenticação</td><td class="priority">Alta</td><td>Obrigatória para o engenheiro; clientes podem usar acesso seguro por link inicialmente.</td></tr>
+<tr><td>Gestão da vistoria</td><td class="priority">Alta</td><td>Dados, checklist, observações, status e documentos.</td></tr>
+<tr><td>Fotografias</td><td class="priority">Alta</td><td>Captura e armazenamento local, processamento e sincronização.</td></tr>
+<tr><td>Modo offline</td><td class="priority">Alta</td><td>Vistoria completa sem Internet.</td></tr>
+<tr><td>Sincronização</td><td class="priority">Alta</td><td>Fila resiliente e retomada após perda de conexão.</td></tr>
+<tr><td>Laudo PDF</td><td class="priority">Alta</td><td>Modelo timbrado, fotografias, assinatura e referência à ART.</td></tr>
+<tr><td>Upload de ART</td><td class="priority">Alta</td><td>ART pode ser emitida externamente e anexada à vistoria.</td></tr>
+<tr><td>Entrega ao cliente</td><td class="priority">Alta</td><td>Link seguro para documentos da vistoria.</td></tr>
+<tr><td>Vídeos</td><td>Média/Futura</td><td>Deixar arquitetura preparada; implementar somente se houver necessidade real.</td></tr>
+<tr><td>Pagamentos online</td><td>Fora da V1</td><td>Não necessário para o fluxo inicial.</td></tr>
+<tr><td>Multiusuário/multitenancy</td><td>Fora da V1</td><td>Não implementar; manter módulos bem delimitados para futura evolução.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. Personas</h2>
+<div class="grid">
+<div class="card">
+<h3>👷 Engenheiro</h3>
+<p><strong>Objetivo:</strong> receber solicitações, organizar a agenda, executar vistorias em campo e produzir/entregar laudos.</p>
+<ul><li>Usa principalmente o celular.</li><li>Pode trabalhar em locais sem sinal.</li><li>Precisa registrar muitas fotografias.</li><li>Precisa proteger dados pessoais e documentos.</li><li>Valoriza agilidade e baixa fricção.</li></ul>
+</div>
+<div class="card">
+<h3>👤 Cliente</h3>
+<p><strong>Objetivo:</strong> solicitar uma vistoria, acompanhar o atendimento e receber os documentos finais.</p>
+<ul><li>Acessa pelo celular ou computador.</li><li>Não precisa de um painel administrativo.</li><li>Deve visualizar somente seus próprios dados e documentos.</li><li>Precisa de acesso simples ao laudo.</li></ul>
+</div>
+</div>
+</section>
+
+<section>
+<h2>4. Casos de uso</h2>
+<table>
+<tr><th>ID</th><th>Ator</th><th>Caso de uso</th><th>Resultado</th></tr>
+<tr><td>UC01</td><td>Cliente</td><td>Consultar serviços</td><td>Conhece serviços, condições e, se habilitado, preços.</td></tr>
+<tr><td>UC02</td><td>Cliente</td><td>Solicitar vistoria</td><td>Solicitação registrada.</td></tr>
+<tr><td>UC03</td><td>Cliente</td><td>Escolher horário disponível</td><td>Preferência ou solicitação de horário registrada.</td></tr>
+<tr><td>UC04</td><td>Engenheiro</td><td>Autenticar-se</td><td>Acesso administrativo concedido.</td></tr>
+<tr><td>UC05</td><td>Engenheiro</td><td>Gerenciar disponibilidade</td><td>Horários de atendimento definidos.</td></tr>
+<tr><td>UC06</td><td>Engenheiro</td><td>Confirmar agendamento</td><td>Vistoria passa para agenda confirmada.</td></tr>
+<tr><td>UC07</td><td>Engenheiro</td><td>Realizar vistoria offline</td><td>Dados e fotos persistidos localmente.</td></tr>
+<tr><td>UC08</td><td>Engenheiro</td><td>Sincronizar vistoria</td><td>Dados e arquivos enviados quando houver conexão.</td></tr>
+<tr><td>UC09</td><td>Engenheiro</td><td>Gerar laudo</td><td>PDF criado a partir dos dados da vistoria.</td></tr>
+<tr><td>UC10</td><td>Engenheiro</td><td>Anexar ART</td><td>ART vinculada à vistoria.</td></tr>
+<tr><td>UC11</td><td>Cliente</td><td>Acessar documentos</td><td>Laudo/ART disponibilizados por acesso autorizado.</td></tr>
+<tr><td>UC12</td><td>Engenheiro</td><td>Consultar histórico</td><td>Vistorias anteriores localizadas e consultadas.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>5. Fluxos de navegação</h2>
+<h3>5.1 Cliente: solicitação</h3>
+<pre>
+Landing Page
+  └─ Serviços
+      └─ Solicitar vistoria
+          ├─ Dados do cliente
+          ├─ Dados do imóvel
+          ├─ Tipo de serviço
+          ├─ Preferência de data/horário
+          └─ Revisar e enviar
+                 ↓
+          Solicitação registrada
+                 ↓
+          Confirmação ao cliente
+</pre>
+<h3>5.2 Engenheiro: operação</h3>
+<pre>
+Login
+  └─ Dashboard
+      ├─ Agenda
+      │   ├─ Dia
+      │   ├─ Semana
+      │   └─ Bloqueios
+      ├─ Solicitações
+      │   └─ Confirmar / recusar / orçar
+      ├─ Vistorias
+      │   ├─ Preparar
+      │   ├─ Realizar
+      │   ├─ Sincronizar
+      │   └─ Gerar laudo
+      ├─ Clientes
+      └─ Configurações
+</pre>
+<h3>5.3 Vistoria offline</h3>
+<pre>
+Abrir vistoria previamente disponível no dispositivo
+        ↓
+Carregar dados locais
+        ↓
+Registrar checklist / observações
+        ↓
+Capturar fotografias
+        ↓
+Processar e persistir localmente
+        ↓
+Finalizar etapa de campo
+        ↓
+Quando houver conexão
+        ↓
+Fila de sincronização
+        ↓
+Backend + Storage
+        ↓
+Vistoria sincronizada
+</pre>
+</section>
+
+<section>
+<h2>6. Arquitetura</h2>
+<div class="card">
+<p><strong>Estilo:</strong> monólito modular com frontend PWA e backend HTTP/API.</p>
+<pre>
+┌─────────────────────────────────────────────────────┐
+│                    PWA / Frontend                   │
+│  Landing • Agenda • Vistoria • Offline • Cliente   │
+└───────────────────────┬─────────────────────────────┘
+                        │ HTTPS
+                        ▼
+┌─────────────────────────────────────────────────────┐
+│                   Backend modular                   │
+│ Auth • Clientes • Imóveis • Agenda • Vistorias     │
+│ Arquivos • Laudos • Configurações • Notificações    │
+└──────────────┬──────────────────────────┬───────────┘
+               │                          │
+               ▼                          ▼
+         PostgreSQL                Object Storage
+                                    (R2/B2)
+</pre>
+</div>
+<div class="grid">
+<div class="card"><h3>Frontend</h3><p>PWA, interface mobile-first, câmera, IndexedDB, fila local e sincronização.</p></div>
+<div class="card"><h3>Backend</h3><p>API, autenticação, autorização, regras de negócio, URLs temporárias e geração de documentos.</p></div>
+<div class="card"><h3>Banco</h3><p>PostgreSQL para dados estruturados e referências dos arquivos.</p></div>
+<div class="card"><h3>Storage</h3><p>Bucket privado para fotografias, PDFs, ARTs e demais documentos.</p></div>
+</div>
+</section>
+
+<section>
+<h2>7. Armazenamento e segurança</h2>
+<h3>7.1 Estratégia</h3>
+<ul>
+<li>Fotos são capturadas e persistidas localmente durante a vistoria.</li>
+<li>Fotos podem ser redimensionadas/comprimidas no dispositivo antes da sincronização.</li>
+<li>O upload para o object storage ocorre diretamente, usando autorização temporária emitida pelo backend.</li>
+<li>O bucket permanece privado.</li>
+<li>O banco guarda metadados e a chave do objeto, não o arquivo binário.</li>
+</ul>
+<h3>7.2 Controle de acesso</h3>
+<pre>
+Usuário autenticado
+       ↓
+Backend verifica autorização
+       ↓
+Recurso pertence à vistoria permitida?
+       ↓
+SIM → gera URL temporária
+NÃO → 403 Forbidden
+</pre>
+<div class="note warning"><strong>Regra:</strong> nunca colocar credenciais permanentes do storage no frontend e nunca confiar em IDs fornecidos pelo cliente para decidir autorização.</div>
+<h3>7.3 Arquivos</h3>
+<table>
+<tr><th>Arquivo</th><th>Origem</th><th>Tratamento</th></tr>
+<tr><td>Fotos</td><td>Engenheiro</td><td>Captura local → compressão → sincronização → storage privado.</td></tr>
+<tr><td>ART</td><td>Engenheiro</td><td>Upload controlado → validação → storage privado.</td></tr>
+<tr><td>Laudo PDF</td><td>Sistema</td><td>Gerado no servidor → storage privado.</td></tr>
+<tr><td>Vídeo</td><td>Engenheiro, se necessário</td><td>Deixar preparado; limitar na V1 ou implementar processamento posterior.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>8. Modelo de dados</h2>
+<pre>
+USER
+- id
+- email
+- password_hash
+- role
+- created_at
+
+CLIENTE
+- id
+- nome
+- cpf_cnpj
+- email
+- telefone
+- created_at
+- updated_at
+
+IMOVEL
+- id
+- cliente_id
+- endereco
+- tipo
+- complemento
+- created_at
+
+SERVICO
+- id
+- nome
+- descricao
+- preco
+- exibir_preco
+- duracao_minutos
+- ativo
+
+SOLICITACAO
+- id
+- cliente_id
+- imovel_id
+- servico_id
+- data_preferencial
+- observacoes
+- status
+- created_at
+
+DISPONIBILIDADE
+- id
+- dia_semana
+- inicio
+- fim
+- ativo
+
+BLOQUEIO_AGENDA
+- id
+- inicio
+- fim
+- motivo
+
+VISTORIA
+- id
+- solicitacao_id
+- cliente_id
+- imovel_id
+- servico_id
+- inicio
+- fim
+- status
+- observacoes
+- created_at
+- updated_at
+
+CHECKLIST_ITEM
+- id
+- vistoria_id
+- descricao
+- resposta
+- observacao
+
+ARQUIVO
+- id
+- vistoria_id
+- tipo
+- storage_key
+- nome_original
+- mime_type
+- tamanho
+- largura
+- altura
+- checksum
+- created_at
+
+LAUDO
+- id
+- vistoria_id
+- storage_key
+- versao
+- gerado_em
+
+ART
+- id
+- vistoria_id
+- storage_key
+- numero
+- created_at
+</pre>
+<div class="note"><strong>Decisão:</strong> Cliente, Imóvel, Solicitação e Vistoria são entidades distintas. Isso evita transformar uma pessoa em "dona" de uma única vistoria e permite histórico.</div>
+</section>
+
+<section>
+<h2>9. Modelo de estados da vistoria</h2>
+<pre>
+SOLICITADA
+   ↓
+AGUARDANDO_ORCAMENTO ──→ RECUSADA
+   ↓
+AGUARDANDO_CONFIRMACAO
+   ↓
+AGENDADA
+   ↓
+EM_ANDAMENTO
+   ↓
+AGUARDANDO_SINCRONIZACAO
+   ↓
+SINCRONIZADA
+   ↓
+AGUARDANDO_LAUDO
+   ↓
+LAUDO_GERADO
+   ↓
+CONCLUIDA
+</pre>
+<p class="small">Os estados podem ser simplificados na implementação inicial. O estado de sincronização também pode ser tratado separadamente do estado comercial da vistoria.</p>
+</section>
+
+<section>
+<h2>10. Offline-first</h2>
+<p>O modo offline é obrigatório na etapa de campo. A aplicação deve persistir dados antes de considerar a operação concluída.</p>
+<table>
+<tr><th>Componente</th><th>Responsabilidade</th></tr>
+<tr><td>IndexedDB</td><td>Persistir dados da vistoria, metadados e referências locais.</td></tr>
+<tr><td>Filesystem/Blob local</td><td>Armazenar temporariamente fotografias e arquivos grandes, conforme a tecnologia escolhida.</td></tr>
+<tr><td>Sync Queue</td><td>Registrar operações pendentes e permitir retry.</td></tr>
+<tr><td>Sync Worker/Service</td><td>Detectar conectividade e executar sincronizações.</td></tr>
+<tr><td>Idempotência</td><td>Evitar duplicação quando uma resposta é perdida após o upload.</td></tr>
+</table>
+<div class="note"><strong>Regra de conclusão:</strong> a aplicação deve informar claramente quantos itens estão sincronizados, pendentes ou com erro. Não se deve apresentar uma vistoria como totalmente sincronizada enquanto existirem arquivos pendentes.</div>
+</section>
+
+<section>
+<h2>11. Sprints propostas</h2>
+<table>
+<tr><th>Sprint</th><th>Objetivo</th><th>Entregas principais</th></tr>
+<tr><td>1</td><td>Fundação</td><td>Repositório, CI, Docker, banco, estrutura modular, ambiente de desenvolvimento, modelo inicial.</td></tr>
+<tr><td>2</td><td>Identidade e base administrativa</td><td>Login do engenheiro, sessão segura, recuperação de senha, layout administrativo e autorização.</td></tr>
+<tr><td>3</td><td>Clientes e imóveis</td><td>CRUD de clientes/imóveis, validações e histórico básico.</td></tr>
+<tr><td>4</td><td>Serviços e agenda</td><td>Serviços, preços opcionais, horários de trabalho, bloqueios e disponibilidade.</td></tr>
+<tr><td>5</td><td>Solicitação e agendamento</td><td>Landing page, formulário público, solicitação, confirmação e calendário.</td></tr>
+<tr><td>6</td><td>Vistoria offline</td><td>Modelo local, IndexedDB, captura de fotos, checklist, observações e recuperação após fechamento.</td></tr>
+<tr><td>7</td><td>Sincronização e storage</td><td>Fila, retry, upload direto, URLs temporárias, R2/B2 e controle de integridade.</td></tr>
+<tr><td>8</td><td>Laudo e documentos</td><td>Template PDF, fotografias, timbrado, assinatura, ART e armazenamento.</td></tr>
+<tr><td>9</td><td>Portal/entrega</td><td>Acesso seguro do cliente, visualização e download de documentos.</td></tr>
+<tr><td>10</td><td>Hardening e publicação</td><td>Testes, segurança, logs, backup, observabilidade, UX mobile, deploy e documentação.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>12. Backlog essencial</h2>
+<div class="grid">
+<div class="card"><h3>Must have</h3><ul><li>Autenticação do engenheiro</li><li>Clientes e imóveis</li><li>Solicitação de vistoria</li><li>Agenda</li><li>Vistoria offline</li><li>Fotos</li><li>Sincronização</li><li>Storage privado</li><li>Laudo PDF</li><li>ART</li><li>Entrega segura</li></ul></div>
+<div class="card"><h3>Should have</h3><ul><li>Preços configuráveis</li><li>Notificações por e-mail/WhatsApp</li><li>Checklist configurável</li><li>Histórico detalhado</li><li>Indicador de armazenamento local</li><li>Retomada de upload</li></ul></div>
+<div class="card"><h3>Could have</h3><ul><li>Vídeos</li><li>Assinatura digital integrada</li><li>Biometria/PIN</li><li>Dashboard com métricas</li><li>Integração com calendário externo</li></ul></div>
+<div class="card"><h3>Won't have na V1</h3><ul><li>Multi-tenancy</li><li>Marketplace</li><li>Assinaturas</li><li>Pagamentos online</li><li>Equipe de engenheiros</li><li>Emissão automática de ART</li></ul></div>
+</div>
+</section>
+
+<section>
+<h2>13. Requisitos não funcionais</h2>
+<table>
+<tr><th>Categoria</th><th>Requisito</th></tr>
+<tr><td>Segurança</td><td>HTTPS, senhas com hash forte, sessões seguras, autorização por recurso, storage privado e URLs temporárias.</td></tr>
+<tr><td>Privacidade</td><td>Minimizar dados coletados, restringir acesso e manter política de retenção/eliminação.</td></tr>
+<tr><td>Offline</td><td>Uma vistoria em andamento não pode depender da conectividade.</td></tr>
+<tr><td>Confiabilidade</td><td>Fila de sincronização, retry, idempotência e confirmação de upload.</td></tr>
+<tr><td>Performance</td><td>Processamento de imagens no dispositivo sempre que possível; upload direto ao storage.</td></tr>
+<tr><td>Usabilidade</td><td>Mobile-first, poucos passos e feedback explícito de sincronização.</td></tr>
+<tr><td>Backup</td><td>Backup automatizado do banco e política de recuperação do storage.</td></tr>
+<tr><td>Auditoria</td><td>Registrar eventos relevantes: login, alterações, geração de laudo, disponibilização e exclusão.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>14. Estratégia de imagens</h2>
+<pre>
+Câmera
+  ↓
+Imagem original temporária
+  ↓
+Redimensionar/comprimir no dispositivo
+  ↓
+Validar formato/tamanho
+  ↓
+Persistir localmente
+  ↓
+Sincronizar
+  ↓
+Storage privado
+</pre>
+<p>Como referência inicial, pode-se limitar a dimensão da imagem destinada ao sistema/laudo a aproximadamente 2400–3000 px no maior lado e usar JPEG/WebP com qualidade ajustável. Os limites devem ser validados com exemplos reais do engenheiro antes de serem fixados.</p>
+</section>
+
+<section>
+<h2>15. Geração do laudo</h2>
+<p>O laudo deve ser produzido a partir de dados estruturados, e não montado manualmente a partir das fotografias. O modelo deve ser versionado para permitir alterações futuras sem invalidar documentos antigos.</p>
+<ul>
+<li>Identificação do engenheiro.</li>
+<li>Dados do cliente e imóvel.</li>
+<li>Objeto e finalidade da vistoria.</li>
+<li>Data e informações da inspeção.</li>
+<li>Constatações/checklist.</li>
+<li>Registro fotográfico.</li>
+<li>Conclusão.</li>
+<li>Assinatura.</li>
+<li>Referência ou anexo da ART.</li>
+</ul>
+<div class="note warning"><strong>Assinatura digital:</strong> a implementação da assinatura deve ser definida conforme o método e requisitos profissionais/jurídicos adotados pelo engenheiro. O sistema não deve presumir que uma imagem de assinatura equivale a uma assinatura digital qualificada.</div>
+</section>
+
+<section>
+<h2>16. Observações sobre a V1</h2>
+<ul>
+<li>O sistema é destinado inicialmente a um único engenheiro, mas a modelagem deve evitar acoplamento desnecessário entre usuário e todos os dados.</li>
+<li>Não implementar multitenancy agora.</li>
+<li>Não transformar o Google Drive em requisito arquitetural. Caso seja usado, encapsulá-lo atrás de uma abstração de armazenamento.</li>
+<li>Object storage privado é a opção preferencial para produção.</li>
+<li>O modo offline deve ser testado em condições reais, incluindo ausência total de sinal, fechamento do aplicativo, reinicialização e retomada de sincronização.</li>
+<li>Vídeos devem permanecer fora do caminho crítico da V1 até existir uma necessidade concreta.</li>
+</ul>
+</section>
+
+<section>
+<h2>17. Critérios de aceite da V1</h2>
+<ol>
+<li>O engenheiro consegue autenticar-se e acessar sua área administrativa.</li>
+<li>Um cliente consegue solicitar uma vistoria pelo celular.</li>
+<li>O engenheiro consegue configurar horários e confirmar uma solicitação.</li>
+<li>Uma vistoria pode ser aberta no celular e executada sem Internet.</li>
+<li>Fotos e dados permanecem disponíveis após fechar/reabrir a aplicação.</li>
+<li>Ao retornar a conectividade, a sincronização pode ser retomada sem duplicar arquivos.</li>
+<li>Arquivos são enviados para storage privado sem expor credenciais permanentes.</li>
+<li>O engenheiro consegue gerar um PDF com dados e fotografias da vistoria.</li>
+<li>A ART pode ser vinculada à vistoria.</li>
+<li>O cliente consegue acessar somente os documentos autorizados.</li>
+<li>O sistema informa claramente pendências de sincronização.</li>
+</ol>
+</section>
+
+<section>
+<h2>18. Stack sugerida</h2>
+<table>
+<tr><th>Camada</th><th>Sugestão</th><th>Motivo</th></tr>
+<tr><td>Frontend</td><td>Next.js / React + PWA</td><td>Mobile-first, ecossistema React e possibilidade de evolução para aplicativo híbrido.</td></tr>
+<tr><td>Offline</td><td>IndexedDB + biblioteca de persistência</td><td>Dados estruturados e fila local.</td></tr>
+<tr><td>Backend</td><td>NestJS</td><td>Boa organização modular para API e regras de negócio.</td></tr>
+<tr><td>Banco</td><td>PostgreSQL</td><td>Modelo relacional adequado ao domínio.</td></tr>
+<tr><td>Storage</td><td>Cloudflare R2</td><td>Object storage, bucket privado e egress previsível.</td></tr>
+<tr><td>PDF</td><td>Biblioteca de geração de PDF no backend</td><td>Laudos consistentes e versionáveis.</td></tr>
+<tr><td>Deploy</td><td>Docker</td><td>Reprodutibilidade e simplicidade operacional.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>19. Evoluções possíveis após a V1</h2>
+<ul>
+<li>Aplicativo híbrido/nativo se as limitações da PWA aparecerem em campo.</li>
+<li>Biometria/PIN para desbloqueio rápido.</li>
+<li>Integração com WhatsApp.</li>
+<li>Notificações automáticas.</li>
+<li>Assinatura digital integrada.</li>
+<li>Vídeos e processamento assíncrono.</li>
+<li>Mais usuários, como secretária/assistente.</li>
+<li>Multiempresa/multitenancy, somente se o produto for transformado em SaaS.</li>
+</ul>
+</section>
+</main>
+<footer>
+Documento técnico de referência para a V1. Os detalhes de segurança, assinatura digital, retenção de dados e requisitos profissionais devem ser validados antes da entrada em produção.
+</footer>
+</body>
+</html>

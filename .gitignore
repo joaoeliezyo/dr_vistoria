@@ -1,0 +1,26 @@
+# Dependências e builds
+node_modules/
+dist/
+build/
+.next/
+coverage/
+# Ambiente e credenciais
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# Cache / editor
+__pycache__/
+.pytest_cache/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+# Temporários
+*.log
+*.tmp
+*.bak
+# Arquivos de uso local
+.temp/
+tmp/
