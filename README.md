@@ -14,7 +14,7 @@ Protótipo visual navegável para apresentação a um engenheiro, **não uma imp
 Abrir `prototype/index.html` em um navegador, sem build. Também é possível iniciar um servidor estático simples (ex.: `python3 -m http.server 8000` na raiz do projeto) e acessar `http://localhost:8000/prototype/`.
 
 ## Estado do protótipo
-O Prompt 01 apresenta visualmente o site institucional, o dashboard e solicitações/agenda. O formulário, as abas e a confirmação pelo engenheiro são simulações locais; recarregar a página reinicia os estados. Vistoria, planta e laudo seguem como áreas reservadas para etapas posteriores. A imagem da landing foi gerada para esta demonstração e não representa um imóvel real.
+O Prompt 01 apresenta visualmente o site institucional, o dashboard e solicitações/agenda. O formulário, as abas e a confirmação pelo engenheiro são simulações locais; recarregar a página reinicia os estados. O Prompt 02 acrescenta ambientes, checklist, observações e constatações com evidências ilustrativas, além da planta esquemática com marcadores. Tudo permanece em memória. O laudo segue como área reservada para a próxima etapa. A imagem da landing foi gerada para esta demonstração e não representa um imóvel real.
 
 ## Executar com Codex
 Ler `AGENTS.md` e seguir, nesta ordem:

@@ -97,7 +97,58 @@
     });
   }
 
+  const fieldState = { room: null, checked: {}, notes: {}, finding: "A" };
+
+  function evidenceMarkup(finding) {
+    return finding.image
+      ? `<figure class="field-evidence"><img src="${finding.image}" alt="Imagem ilustrativa gerada: umidade e descascamento em parede de banheiro"><figcaption>Imagem ilustrativa · gerada para demonstração</figcaption></figure>`
+      : `<figure class="field-evidence evidence-placeholder"><span aria-hidden="true">▧</span><figcaption>Imagem ilustrativa · espaço reservado para ${escapeHtml(finding.title.toLowerCase())}</figcaption></figure>`;
+  }
+
+  function findingMarkup(finding) {
+    return `<span class="eyebrow">Constatação ${finding.id} · fictícia</span><h2>${escapeHtml(finding.title)}</h2><p class="field-meta">${escapeHtml(finding.room)} · ${escapeHtml(finding.category)}</p><p>${escapeHtml(finding.description)}</p><p class="field-location"><strong>Localização ilustrativa:</strong> ${escapeHtml(finding.location)}</p>${evidenceMarkup(finding)}`;
+  }
+
+  function renderInspection() {
+    const room = fieldState.room;
+    const findings = data.inspection.findings;
+    const total = data.scenario.environments.length * data.inspection.checks.length;
+    const completed = Object.values(fieldState.checked).filter(Boolean).length;
+    main.innerHTML = `<div class="page-wrap field-page"><div class="page-heading"><div><span class="eyebrow">${escapeHtml(data.inspection.id)} · exemplo</span><h1 id="page-title">Vistoria do apartamento</h1><p>${escapeHtml(data.scenario.property)} · ${escapeHtml(data.scenario.client)}</p></div><span class="offline-demo">Offline (simulado)</span></div><div class="field-progress"><div><strong>${completed} de ${total} itens marcados</strong><span>Progresso demonstrativo · reinicia ao recarregar</span></div><progress value="${completed}" max="${total}">${completed}/${total}</progress></div>
+    ${!room ? `<section class="panel-card"><span class="eyebrow">01 / Ambientes</span><h2>Por onde vamos começar?</h2><p class="field-meta">Selecione um ambiente para explorar o checklist e a constatação de exemplo.</p><div class="room-grid">${data.scenario.environments.map((name,index) => `<button type="button" class="room-card" data-room="${name}"><span class="room-number">0${index+1}</span><strong>${name}</strong><span>${data.inspection.checks.filter((_,i) => fieldState.checked[name+i]).length}/3 itens · 1 constatação fictícia</span><span aria-hidden="true">→</span></button>`).join("")}</div></section><div class="field-callout">O estado offline é apenas ilustrado. Não há captura de fotos, salvamento ou sincronização.</div>` : `<button type="button" class="button button-outline back-rooms" id="back-rooms">← Voltar aos ambientes</button><div class="field-layout"><section class="panel-card"><span class="eyebrow">02 / Checklist ilustrativo</span><h2>${escapeHtml(room)}</h2><p class="field-meta">Marque os itens para simular uma revisão visual.</p><div class="field-checks">${data.inspection.checks.map((check,i) => `<label><input type="checkbox" data-check="${room+i}" ${fieldState.checked[room+i] ? "checked" : ""}><span><strong>${escapeHtml(check.category)}</strong><span>${escapeHtml(check.label)}</span></span></label>`).join("")}</div><label class="field-notes">Observações de exemplo<textarea id="room-notes" rows="3" placeholder="Anote uma observação fictícia…">${escapeHtml(fieldState.notes[room] || "")}</textarea></label><small class="field-meta">Texto mantido apenas nesta sessão.</small></section><section class="panel-card"><span class="eyebrow">03 / Constatações e evidências</span><h2>Registro do ambiente</h2>${findings.filter(f => f.room === room).map(f => `<button type="button" class="finding-choice" data-finding="${f.id}"><span class="finding-letter">${f.id}</span><span><strong>${escapeHtml(f.title)}</strong><small>${escapeHtml(f.category)} · exemplo</small></span><span aria-hidden="true">↗</span></button>`).join("")}<div id="room-finding" hidden></div></section></div>`}<div class="page-end"><span>Vistoria visual · sem validade técnica</span><a href="#planta">Ver planta e constatações →</a></div></div>`;
+    main.querySelectorAll("[data-room]").forEach(button => button.addEventListener("click", () => { fieldState.room = button.dataset.room; renderInspection(); main.querySelector("#back-rooms").focus(); }));
+    main.querySelector("#back-rooms")?.addEventListener("click", () => { fieldState.room = null; renderInspection(); main.querySelector("[data-room]").focus(); });
+    main.querySelectorAll("[data-check]").forEach(input => input.addEventListener("change", () => {
+      fieldState.checked[input.dataset.check] = input.checked;
+      const count = Object.values(fieldState.checked).filter(Boolean).length;
+      main.querySelector("progress").value = count;
+      main.querySelector(".field-progress strong").textContent = `${count} de ${total} itens marcados`;
+    }));
+    main.querySelector("#room-notes")?.addEventListener("input", event => { fieldState.notes[room] = event.target.value; });
+    main.querySelectorAll("[data-finding]").forEach(button => button.addEventListener("click", () => {
+      fieldState.finding = button.dataset.finding;
+      const panel = main.querySelector("#room-finding");
+      panel.hidden = false;
+      panel.innerHTML = findingMarkup(findings.find(f => f.id === fieldState.finding)) + '<a class="text-link" href="#planta">Localizar na planta →</a>';
+      button.setAttribute("aria-expanded", "true");
+    }));
+  }
+
+  function renderFloorPlan() {
+    const finding = data.inspection.findings.find(item => item.id === fieldState.finding);
+    main.innerHTML = `<div class="page-wrap field-page"><div class="page-heading"><div><span class="eyebrow">Localização das evidências · exemplo</span><h1 id="page-title">Planta e constatações</h1><p>${escapeHtml(data.scenario.property)} · esquema original, sem escala ou validade arquitetônica.</p></div><a class="button button-outline" href="#vistoria">← Voltar à vistoria</a></div><div class="floor-layout"><section class="panel-card"><span class="eyebrow">Esquema ilustrativo</span><h2>Selecione um marcador</h2><div class="floor-drawing"><svg viewBox="0 0 400 360" role="img" aria-label="Esquema de apartamento: sala à esquerda, banheiro no alto à direita e cozinha embaixo à direita"><rect x="24" y="24" width="352" height="312" fill="#f4f7fb" stroke="#102653" stroke-width="7"/><path d="M220 24V145 M220 195V336 M220 178H376" fill="none" stroke="#102653" stroke-width="6"/><path d="M220 145 Q270 145 270 195 M70 336 Q70 286 120 286" fill="none" stroke="#a9b8ca" stroke-width="2"/><rect x="40" y="70" width="45" height="100" rx="7" fill="#d9e2ef"/><rect x="270" y="40" width="80" height="35" rx="5" fill="#d9e2ef"/><path d="M350 210V310H260" fill="none" stroke="#d9e2ef" stroke-width="22"/><text x="120" y="235" text-anchor="middle">Sala</text><text x="295" y="137" text-anchor="middle">Banheiro</text><text x="285" y="315" text-anchor="middle">Cozinha</text></svg>${data.inspection.findings.map(f => `<button type="button" class="floor-marker ${f.id === finding.id ? "selected" : ""}" style="left:${f.x}%;top:${f.y}%" data-marker="${f.id}" aria-label="Constatação ${f.id}: ${escapeHtml(f.title)} no ambiente ${escapeHtml(f.room)}" aria-pressed="${f.id === finding.id}">${f.id}</button>`).join("")}</div><p class="field-meta">Marcadores fictícios · posição aproximada apenas para apresentação.</p><h3 class="field-list-title">Alternativa textual</h3><div class="finding-list">${data.inspection.findings.map(f => `<button type="button" class="finding-choice" data-list-marker="${f.id}" aria-pressed="${f.id === finding.id}"><span class="finding-letter">${f.id}</span><span><strong>${escapeHtml(f.title)}</strong><small>${escapeHtml(f.room)} · ${escapeHtml(f.category)}</small></span></button>`).join("")}</div></section><section class="panel-card finding-detail" id="finding-detail" aria-live="polite">${findingMarkup(finding)}</section></div></div>`;
+    main.querySelectorAll("[data-marker], [data-list-marker]").forEach(button => button.addEventListener("click", () => {
+      const id = button.dataset.marker || button.dataset.listMarker;
+      const source = button.hasAttribute("data-marker") ? "data-marker" : "data-list-marker";
+      fieldState.finding = id;
+      renderFloorPlan();
+      main.querySelector(`[${source}="${id}"]`).focus({ preventScroll: true });
+    }));
+  }
+
   function renderArea(area) {
+    if (area.id === "vistoria") return renderInspection();
+    if (area.id === "planta") return renderFloorPlan();
     if (area.id === "site") return renderSite();
     if (area.id === "painel") return renderDashboard();
     if (area.id === "solicitacoes") return renderRequests();

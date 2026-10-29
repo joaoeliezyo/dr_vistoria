@@ -19,6 +19,19 @@ window.demoData = {
       "Fissura superficial ilustrativa na cozinha"
     ]
   },
+  inspection: {
+    id: "Vistoria DEMO-001",
+    checks: [
+      { category: "Estrutura", label: "Observar paredes, piso e revestimentos" },
+      { category: "Elétrica", label: "Observar acabamento aparente das tomadas" },
+      { category: "Hidráulica", label: "Observar sinais aparentes de umidade" }
+    ],
+    findings: [
+      { id: "A", room: "Banheiro", category: "Hidráulica", title: "Infiltração ilustrativa", description: "Mancha de umidade e descascamento aparente na parede acima do revestimento. Registro fictício para discutir a apresentação de evidências; não determina causa ou diagnóstico.", location: "Parede junto ao revestimento", image: "assets/infiltracao-ilustrativa.png", x: 76, y: 28 },
+      { id: "B", room: "Sala", category: "Elétrica", title: "Tomada sem acabamento", description: "Ponto elétrico representado sem espelho de acabamento na parede da sala. Constatação exclusivamente demonstrativa.", location: "Parede lateral da sala", image: null, x: 27, y: 39 },
+      { id: "C", room: "Cozinha", category: "Estrutura", title: "Fissura superficial ilustrativa", description: "Traço superficial representado no revestimento da cozinha. Exemplo visual sem avaliação de origem, extensão ou gravidade.", location: "Parede próxima à bancada", image: null, x: 73, y: 72 }
+    ]
+  },
   site: {
     heroEyebrow: "Engenharia residencial · apresentação ilustrativa",
     heroTitle: "Mais clareza para decisões sobre o seu imóvel.",
