@@ -25,6 +25,7 @@ Ler `AGENTS.md` e seguir, nesta ordem:
 - `prompts/04_VISTORIA_AVANCADA.md`
 - `prompts/05_GESTAO_E_CLIENTE.md`
 - `prompts/06_REFINAMENTO_APRESENTACAO.md`
+- `prompts/07_JORNADA_CLIENTE.md`
 
 Passe ao Codex o conteúdo integral de **um** prompt por vez. Analise o resultado antes de seguir.
 
@@ -77,3 +78,16 @@ O aviso **SIMULAÇÃO — nenhum dado está sendo enviado** permanece visível, 
 **Restaurar conectividade simulada** reinicia somente o painel, sem apagar avaliações; **Restaurar cenário** reinicia toda a demonstração de campo e recolhe o painel. Recarregar reinicia todos os estados. O protótipo continua em HTML/CSS/JS local, sem build ou dependências de rede; abra `prototype/index.html` ou use o servidor estático opcional descrito acima.
 
 A etapa final prepara a validação do conceito, sem iniciar a V1. Ainda é necessário colher o retorno do engenheiro e conferir a apresentação em aparelho físico e com leitor de tela. Não há backend, banco, autenticação, câmera, upload, PWA, sincronização, PDF, ART ou assinatura reais.
+
+## Jornada demonstrativa — Prompt 07
+Use o controle superior **Visão do cliente / Visão do engenheiro** para alternar a perspectiva, sem autenticação ou autorização real. Na visão do engenheiro, a sidebar continua com seis módulos. A visão do cliente tem **Início, Minha solicitação, Atendimento e Documentos**, sem ferramentas administrativas.
+
+No Início, abra **Simular solicitação**. O exemplo mantém nome/imóvel fixos e usa os dois serviços **Vistoria de entrega de imóvel + Laudo técnico** para preservar DEMO-001 e o laudo fixo. Os seis serviços são apresentados; outros pares de serviços não geram novos cenários nesta demonstração. Escolha o período, confira **Visualizar resumo** e só então **Simular envio**. Essa ação produz um recibo visual local, não comprovante real; nada é enviado. O cenário pré-carregado é identificado até essa ação ocorrer. Repetir o envio reinicia apenas a narrativa/agenda de DEMO-001, sem criar outro pedido.
+
+A preferência é compartilhada entre as perspectivas e nunca reserva data. Na visão do engenheiro, em **Solicitações e agenda**, a confirmação existente atualiza o acompanhamento do cliente. O painel **Controle do apresentador** permite **Simular etapa** de análise/negociação, execução e preparo documental; execução/preparo exigem agenda confirmada. São somente estados de narrativa, sem visita ou emissão real. Indicadores e histórico acompanham o mesmo estado local.
+
+Checklist, modelos, marcadores e fila de conectividade não avançam o atendimento nem liberam documentos. Em Documentos do cliente, só há botão de leitura da prévia HTML fixa, aberta em diálogo com fechamento por botão/Escape e retorno de foco. ART permanece não emitida e anexo pendente, sem links. A prévia administrativa da Etapa 05 continua disponível.
+
+**Restaurar cenário geral** reinicia as simulações de campo, conectividade, agenda e jornada, mantendo a perspectiva e abrindo o Início do cliente ou o módulo administrativo atual. **Restaurar cenário**, na Vistoria, também reinicia agenda/jornada para o exemplo pré-carregado, além do estado de campo. Restaurar apenas conectividade afeta só o painel. Recarregar reinicia a perspectiva do engenheiro e todos os estados. Alternar perspectivas sem restaurar mantém o contexto de cada lado e foca o conteúdo principal.
+
+Os documentos da Etapa 06 foram preservados. Use os adendos `docs/ADENDO-ROTEIRO-CLIENTE.md` (5–7 minutos) e `docs/PERGUNTAS-VALIDACAO-CLIENTE.md`. Capturas e resultados: `artifacts/prompt-07/VERIFICACAO.md`. Continuam ausentes backend, login, autorização, storage, pagamentos, mensagens, compartilhamento, PDF, ART ou assinaturas reais.

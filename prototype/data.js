@@ -19,6 +19,16 @@ window.demoData = {
       "Fissura superficial ilustrativa na cozinha"
     ]
   },
+  journey: {
+    pages: { inicio: "Início", pedido: "Minha solicitação", atendimento: "Atendimento", documentos: "Documentos" },
+    periods: { "Manhã": "Período da manhã, sujeito à conversa com o engenheiro", "Tarde": "Período da tarde, sujeito à conversa com o engenheiro", "Indiferente": "Período indiferente, sujeito à conversa com o engenheiro" },
+    stages: {
+      received: { label: "Pedido recebido (simulado)", description: "O resumo do DEMO-001 foi confirmado apenas nesta sessão. Nenhum pedido foi enviado." },
+      analysis: { label: "Em análise / negociação (simulado)", description: "O engenheiro representa a análise do interesse e o alinhamento do atendimento, sem mensagens reais." },
+      execution: { label: "Execução ilustrada (simulado)", description: "O apresentador escolheu mostrar a etapa de execução. Não comprova visita ou vistoria realizada.", needsAppointment: true },
+      preparing: { label: "Preparo documental ilustrado (simulado)", description: "O apresentador escolheu mostrar o preparo documental. Não houve emissão, assinatura ou entrega.", needsAppointment: true }
+    }
+  },
   inspection: {
     id: "Vistoria DEMO-001",
     checklistModels: [
