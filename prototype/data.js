@@ -32,6 +32,15 @@ window.demoData = {
       { id: "C", room: "Cozinha", category: "Estrutura", title: "Fissura superficial ilustrativa", description: "Traço superficial representado no revestimento da cozinha. Exemplo visual sem avaliação de origem, extensão ou gravidade.", location: "Parede próxima à bancada", image: null, x: 73, y: 72 }
     ]
   },
+  report: {
+    id: "LAUDO DEMO-001",
+    title: "Prévia de laudo técnico",
+    subtitle: "Vistoria de entrega de imóvel",
+    objective: "Apresentar a organização visual de uma vistoria de entrega, relacionando ambientes, constatações fictícias e evidências ilustrativas. Este conteúdo serve exclusivamente à validação da demonstração com o engenheiro.",
+    characterization: "Apartamento residencial de exemplo, composto neste cenário por sala, cozinha e banheiro. Localização genérica, sem endereço, área, matrícula ou características técnicas verificadas.",
+    methodology: "Simulação de observação visual dos ambientes e de registro por categorias: Estrutura, Elétrica e Hidráulica. A fotografia foi gerada para demonstração; o esquema de planta é original e sem escala. Não foram realizados visita, ensaios, medições ou avaliação técnica real.",
+    conclusion: "O cenário reúne três registros fictícios: umidade aparente no banheiro, tomada sem acabamento na sala e fissura superficial na cozinha. A organização permite discutir clareza, rastreabilidade e apresentação das evidências. Não é possível concluir sobre causas, riscos, desempenho ou condições de uso a partir desta demonstração. Qualquer conclusão técnica dependeria de avaliação profissional real, fora deste protótipo."
+  },
   site: {
     heroEyebrow: "Engenharia residencial · apresentação ilustrativa",
     heroTitle: "Mais clareza para decisões sobre o seu imóvel.",

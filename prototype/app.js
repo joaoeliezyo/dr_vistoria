@@ -17,6 +17,7 @@
 
   function closeMenu() {
     sidebar.classList.remove("is-open");
+    sidebar.inert = matchMedia("(max-width: 900px)").matches;
     menuButton.setAttribute("aria-expanded", "false");
     menuButton.setAttribute("aria-label", "Abrir menu");
   }
@@ -136,7 +137,7 @@
 
   function renderFloorPlan() {
     const finding = data.inspection.findings.find(item => item.id === fieldState.finding);
-    main.innerHTML = `<div class="page-wrap field-page"><div class="page-heading"><div><span class="eyebrow">Localização das evidências · exemplo</span><h1 id="page-title">Planta e constatações</h1><p>${escapeHtml(data.scenario.property)} · esquema original, sem escala ou validade arquitetônica.</p></div><a class="button button-outline" href="#vistoria">← Voltar à vistoria</a></div><div class="floor-layout"><section class="panel-card"><span class="eyebrow">Esquema ilustrativo</span><h2>Selecione um marcador</h2><div class="floor-drawing"><svg viewBox="0 0 400 360" role="img" aria-label="Esquema de apartamento: sala à esquerda, banheiro no alto à direita e cozinha embaixo à direita"><rect x="24" y="24" width="352" height="312" fill="#f4f7fb" stroke="#102653" stroke-width="7"/><path d="M220 24V145 M220 195V336 M220 178H376" fill="none" stroke="#102653" stroke-width="6"/><path d="M220 145 Q270 145 270 195 M70 336 Q70 286 120 286" fill="none" stroke="#a9b8ca" stroke-width="2"/><rect x="40" y="70" width="45" height="100" rx="7" fill="#d9e2ef"/><rect x="270" y="40" width="80" height="35" rx="5" fill="#d9e2ef"/><path d="M350 210V310H260" fill="none" stroke="#d9e2ef" stroke-width="22"/><text x="120" y="235" text-anchor="middle">Sala</text><text x="295" y="137" text-anchor="middle">Banheiro</text><text x="285" y="315" text-anchor="middle">Cozinha</text></svg>${data.inspection.findings.map(f => `<button type="button" class="floor-marker ${f.id === finding.id ? "selected" : ""}" style="left:${f.x}%;top:${f.y}%" data-marker="${f.id}" aria-label="Constatação ${f.id}: ${escapeHtml(f.title)} no ambiente ${escapeHtml(f.room)}" aria-pressed="${f.id === finding.id}">${f.id}</button>`).join("")}</div><p class="field-meta">Marcadores fictícios · posição aproximada apenas para apresentação.</p><h3 class="field-list-title">Alternativa textual</h3><div class="finding-list">${data.inspection.findings.map(f => `<button type="button" class="finding-choice" data-list-marker="${f.id}" aria-pressed="${f.id === finding.id}"><span class="finding-letter">${f.id}</span><span><strong>${escapeHtml(f.title)}</strong><small>${escapeHtml(f.room)} · ${escapeHtml(f.category)}</small></span></button>`).join("")}</div></section><section class="panel-card finding-detail" id="finding-detail" aria-live="polite">${findingMarkup(finding)}</section></div></div>`;
+    main.innerHTML = `<div class="page-wrap field-page"><div class="page-heading"><div><span class="eyebrow">Localização das evidências · exemplo</span><h1 id="page-title">Planta e constatações</h1><p>${escapeHtml(data.scenario.property)} · esquema original, sem escala ou validade arquitetônica.</p></div><a class="button button-outline" href="#vistoria">← Voltar à vistoria</a></div><div class="floor-layout"><section class="panel-card"><span class="eyebrow">Esquema ilustrativo</span><h2>Selecione um marcador</h2><div class="floor-drawing"><svg viewBox="0 0 400 360" role="img" aria-label="Esquema de apartamento: sala à esquerda, banheiro no alto à direita e cozinha embaixo à direita"><rect x="24" y="24" width="352" height="312" fill="#f4f7fb" stroke="#102653" stroke-width="7"/><path d="M220 24V145 M220 195V336 M220 178H376" fill="none" stroke="#102653" stroke-width="6"/><path d="M220 145 Q270 145 270 195 M70 336 Q70 286 120 286" fill="none" stroke="#a9b8ca" stroke-width="2"/><rect x="40" y="70" width="45" height="100" rx="7" fill="#d9e2ef"/><rect x="270" y="40" width="80" height="35" rx="5" fill="#d9e2ef"/><path d="M350 210V310H260" fill="none" stroke="#d9e2ef" stroke-width="22"/><text x="120" y="235" text-anchor="middle">Sala</text><text x="295" y="137" text-anchor="middle">Banheiro</text><text x="285" y="315" text-anchor="middle">Cozinha</text></svg>${data.inspection.findings.map(f => `<button type="button" class="floor-marker ${f.id === finding.id ? "selected" : ""}" style="left:${f.x}%;top:${f.y}%" data-marker="${f.id}" aria-label="Constatação ${f.id}: ${escapeHtml(f.title)} no ambiente ${escapeHtml(f.room)}" aria-pressed="${f.id === finding.id}">${f.id}</button>`).join("")}</div><p class="field-meta">Marcadores fictícios · posição aproximada apenas para apresentação.</p><h3 class="field-list-title">Alternativa textual</h3><div class="finding-list">${data.inspection.findings.map(f => `<button type="button" class="finding-choice" data-list-marker="${f.id}" aria-pressed="${f.id === finding.id}"><span class="finding-letter">${f.id}</span><span><strong>${escapeHtml(f.title)}</strong><small>${escapeHtml(f.room)} · ${escapeHtml(f.category)}</small></span></button>`).join("")}</div></section><section class="panel-card finding-detail" id="finding-detail" aria-live="polite">${findingMarkup(finding)}</section></div><div class="page-end"><span>Constatações fictícias A, B e C</span><a href="#laudo">Abrir prévia do laudo →</a></div></div>`;
     main.querySelectorAll("[data-marker], [data-list-marker]").forEach(button => button.addEventListener("click", () => {
       const id = button.dataset.marker || button.dataset.listMarker;
       const source = button.hasAttribute("data-marker") ? "data-marker" : "data-list-marker";
@@ -146,7 +147,26 @@
     }));
   }
 
+  function renderReport() {
+    const scenario = data.scenario;
+    const report = data.report;
+    const sheetHead = `<header class="report-running"><span><strong>dr_vistoria</strong> · marca provisória</span><span>${escapeHtml(report.id)} · fictício</span></header>`;
+    const sheetFoot = number => `<footer class="report-running report-foot"><span>EXEMPLO SEM VALIDADE TÉCNICA</span><span>${number} / 3 · composição ilustrativa</span></footer>`;
+    main.innerHTML = `<div class="page-wrap report-page"><div class="page-heading"><div><span class="eyebrow">Documento fictício · leitura em HTML</span><h1 id="page-title">Prévia do laudo</h1><p>Conteúdo ilustrativo para revisão da apresentação técnica. Nenhum documento oficial é emitido.</p></div><a href="#planta" class="button button-outline">← Voltar à planta</a></div>
+    <nav class="report-index" aria-label="Seções da prévia"><button type="button" data-report-section="report-cover">Capa</button><button type="button" data-report-section="report-body">Identificação e método</button><button type="button" data-report-section="report-findings">Constatações e conclusão</button></nav>
+    <article class="report-sheet report-cover" id="report-cover" aria-labelledby="report-title">${sheetHead}<div class="report-cover-body"><span class="report-edition">${escapeHtml(report.id)} / DEMONSTRAÇÃO</span><div class="report-rule"></div><h2 id="report-title">${escapeHtml(report.title)}</h2><p class="report-subtitle">${escapeHtml(report.subtitle)}</p><div class="report-warning">EXEMPLO SEM VALIDADE TÉCNICA</div><p class="report-cover-property">${escapeHtml(scenario.property)}</p><p>${escapeHtml(scenario.location)} · localização fictícia</p><dl class="report-facts"><div><dt>Cliente fictício</dt><dd>${escapeHtml(scenario.client)}</dd></div><div><dt>Profissional de exemplo</dt><dd>${escapeHtml(scenario.professional)}</dd></div><div><dt>Referência do cenário</dt><dd>${escapeHtml(data.inspection.id)}</dd></div><div><dt>Data ilustrativa</dt><dd>${escapeHtml(scenario.suggestedDate)}</dd></div></dl></div><p class="report-cover-note">Prévia visual para discussão de linguagem e organização. Sem inspeção real, registro profissional, emissão de ART ou assinatura.</p>${sheetFoot(1)}</article>
+    <article class="report-sheet" id="report-body" aria-labelledby="report-body-title">${sheetHead}<span class="report-chapter">01 / CONTEXTO</span><h2 id="report-body-title">Identificação e método</h2><section><h3>1. Identificação do cenário</h3><dl class="report-facts"><div><dt>Cliente</dt><dd>${escapeHtml(scenario.client)}</dd></div><div><dt>Imóvel</dt><dd>${escapeHtml(scenario.property)} · ${escapeHtml(scenario.location)}</dd></div><div><dt>Solicitação</dt><dd>${escapeHtml(scenario.request)}</dd></div><div><dt>Serviços no pedido</dt><dd>${scenario.services.map(escapeHtml).join(" + ")}</dd></div></dl></section><section><h3>2. Objetivo</h3><p>${escapeHtml(report.objective)}</p></section><section><h3>3. Caracterização do imóvel</h3><p>${escapeHtml(report.characterization)}</p><ul class="report-room-list">${scenario.environments.map(room => `<li>${escapeHtml(room)}</li>`).join("")}</ul></section><section><h3>4. Metodologia e limites</h3><p>${escapeHtml(report.methodology)}</p></section><section><h3>5. Referência à planta</h3><p>As letras A, B e C identificam os mesmos registros na planta ilustrativa e nesta prévia. A posição de cada marcador é aproximada e não corresponde a um levantamento arquitetônico.</p><a class="text-link" href="#planta">Consultar planta e marcadores →</a></section>${sheetFoot(2)}</article>
+    <article class="report-sheet" id="report-findings" aria-labelledby="report-findings-title">${sheetHead}<span class="report-chapter">02 / REGISTROS</span><h2 id="report-findings-title">Constatações e evidências</h2><p>Três registros fictícios vinculados aos ambientes do cenário. As descrições abaixo são as mesmas apresentadas na vistoria.</p>${data.inspection.findings.map(finding => `<section class="report-finding" aria-labelledby="report-finding-${finding.id}"><div class="report-finding-heading"><span class="finding-letter">${finding.id}</span><div><h3 id="report-finding-${finding.id}">${escapeHtml(finding.title)}</h3><p>${escapeHtml(finding.room)} · ${escapeHtml(finding.category)} · marcador ${finding.id}</p></div></div><p>${escapeHtml(finding.description)}</p><p><strong>Localização ilustrativa:</strong> ${escapeHtml(finding.location)}</p>${evidenceMarkup(finding)}</section>`).join("")}<section class="report-conclusion"><h3>6. Conclusão ilustrativa</h3><strong>EXEMPLO SEM VALIDADE TÉCNICA</strong><p>${escapeHtml(report.conclusion)}</p></section><section class="report-reserved" aria-label="ART e assinatura demonstrativas"><div><h3>7. ART</h3><span>Área reservada · placeholder</span><p>Sem número, registro ou emissão de ART.</p></div><div><h3>8. Assinatura</h3><span>Área reservada · placeholder</span><p>${escapeHtml(scenario.professional)}<br>Sem assinatura real ou digital.</p></div></section>${sheetFoot(3)}</article><div class="page-end"><span>Fim da prévia · documento fictício</span><a href="#painel">Voltar ao painel →</a></div></div>`;
+    main.querySelectorAll("[data-report-section]").forEach(button => button.addEventListener("click", () => {
+      const section = main.querySelector(`#${button.dataset.reportSection}`);
+      section.setAttribute("tabindex", "-1");
+      section.focus({ preventScroll: true });
+      section.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+    }));
+  }
+
   function renderArea(area) {
+    if (area.id === "laudo") return renderReport();
     if (area.id === "vistoria") return renderInspection();
     if (area.id === "planta") return renderFloorPlan();
     if (area.id === "site") return renderSite();
@@ -200,6 +220,7 @@
 
   menuButton.addEventListener("click", () => {
     const isOpen = sidebar.classList.toggle("is-open");
+    sidebar.inert = !isOpen && matchMedia("(max-width: 900px)").matches;
     menuButton.setAttribute("aria-expanded", String(isOpen));
     menuButton.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
   });
@@ -210,6 +231,11 @@
       menuButton.focus();
     }
   });
-  window.addEventListener("hashchange", render);
+  document.querySelector(".skip-link").addEventListener("click", event => {
+    event.preventDefault();
+    main.focus();
+  });
+  matchMedia("(max-width: 900px)").addEventListener("change", closeMenu);
+  window.addEventListener("hashchange", () => { render(); main.focus({ preventScroll: true }); });
   render();
 })();
