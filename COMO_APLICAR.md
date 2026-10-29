@@ -1,9 +1,10 @@
-# Como aplicar — Etapa 05
+# Como instalar o pacote da Etapa 06
 
-Extraia o ZIP e copie os conteúdos das pastas `docs/` e `prompts/` para as pastas de mesmo nome na raiz do repositório `dr_vistoria`.
+Copie o conteúdo das pastas `docs/` e `prompts/` para as pastas de mesmo nome na raiz do repositório `dr_vistoria`. Não mova os originais em `docs/referencias/`.
 
-Não substitua `AGENTS.md`, `prototype/` nem `typography.css`.
+Confira que os arquivos abaixo existem:
+- `docs/EXTENSAO-PROTOTIPO-06.md`
+- `docs/ACEITE-PROMPT-06.md`
+- `prompts/06_REFINAMENTO_APRESENTACAO.md`
 
-Inicie o Codex na raiz do repositório e envie:
-
-> Leia `AGENTS.md`, `README.md`, `docs/EXTENSAO-PROTOTIPO-05.md`, `docs/ACEITE-PROMPT-05.md` e `prompts/05_GESTAO_E_CLIENTE.md`, além dos demais documentos exigidos pelo prompt. Execute exclusivamente o Prompt 05, preserve a tipografia e os fluxos existentes, rode os testes em 1440×900 e 390×844, gere capturas e `artifacts/prompt-05/VERIFICACAO.md`. Não avance para o Prompt 06 nem faça commit/push. Ao finalizar, apresente alterações, testes e limitações.
+Abra o Codex na raiz do repositório e peça para ler `AGENTS.md`, os dois documentos da etapa e o Prompt 06, executando exclusivamente o Prompt 06, sem commit/push. Revise o resultado e as capturas antes da apresentação ao engenheiro.

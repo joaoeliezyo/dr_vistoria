@@ -46,6 +46,23 @@ window.demoData = {
       { id: "C", room: "Cozinha", category: "Estrutura", title: "Fissura superficial ilustrativa", description: "Traço superficial representado no revestimento da cozinha. Exemplo visual sem avaliação de origem, extensão ou gravidade.", location: "Parede próxima à bancada", image: null, x: 73, y: 72 }
     ]
   },
+  connectivity: {
+    queue: [
+      { id: "checklist", name: "Checklist de exemplo", context: "Itens ilustrativos do apartamento" },
+      { id: "observation", name: "Observação de exemplo", context: "Texto fictício do Banheiro" },
+      { id: "photo", name: "Fotografia ilustrativa", context: "Imagem local da constatação A" },
+      { id: "finding", name: "Constatação A", context: "Infiltração ilustrativa no Banheiro" }
+    ],
+    states: {
+      connected: { label: "Conectado (simulado)", description: "Exemplos disponíveis para iniciar o roteiro. A conexão do dispositivo não é consultada.", statuses: ["ready", "ready", "ready", "ready"], next: "offline", action: "Simular perda de conexão" },
+      offline: { label: "Sem conexão (simulado)", description: "Condição offline apenas representada. Os quatro exemplos ainda não foram incluídos na fila fictícia.", statuses: ["ready", "ready", "ready", "ready"], next: "pending", action: "Mostrar 4 pendências fictícias" },
+      pending: { label: "Pendências (simulado)", description: "Quatro exemplos aguardam o próximo passo visual. Nenhuma fila real ou retenção de dados existe.", statuses: ["pending", "pending", "pending", "pending"], next: "syncing", action: "Simular reconexão e sincronização" },
+      syncing: { label: "Sincronizando (simulado)", description: "Reconexão e envio representados. Nada avança sozinho: escolha concluir ou demonstrar uma falha.", statuses: ["processing", "processing", "processing", "processing"], next: "complete", action: "Concluir simulação" },
+      error: { label: "Falha recuperável (simulado)", description: "Erro ilustrativo na fotografia; três exemplos permanecem pendentes. Tentar novamente retorna à etapa visual de sincronização.", statuses: ["pending", "pending", "error", "pending"], next: "syncing", action: "Tentar novamente (simulação)" },
+      complete: { label: "Concluído (simulado)", description: "Resultado do roteiro: quatro exemplos concluídos apenas na interface. Nenhum dado foi enviado; avaliação, laudo e documentos não foram alterados.", statuses: ["complete", "complete", "complete", "complete"], next: "offline", action: "Repetir roteiro sem conexão" }
+    },
+    itemStates: { ready: "Exemplo fora da fila", pending: "Pendente (simulado)", processing: "Envio representado (simulado)", error: "Erro (simulado)", complete: "Concluído (simulado)" }
+  },
   report: {
     id: "LAUDO DEMO-001",
     title: "Prévia de laudo técnico",
@@ -84,44 +101,44 @@ window.demoData = {
     {
       id: "site", number: "01", icon: "⌂", title: "Site institucional", short: "Apresentação", eyebrow: "Primeiro contato",
       heading: "Uma presença clara para serviços de engenharia.",
-      description: "Estrutura inicial da página pública, com espaço previsto para apresentação, serviços, processo e contato.",
+      description: "Página pública ilustrativa com apresentação, serviços, processo e interesse simulado.",
       details: ["Apresentação profissional fictícia", "Serviços em destaque", "Contato ilustrativo"],
-      note: "A composição completa do site será desenvolvida após a validação desta fundação."
+      note: "Página de demonstração; nenhum pedido é enviado."
     },
     {
       id: "painel", number: "02", icon: "▦", title: "Dashboard", short: "Painel", eyebrow: "Visão do trabalho",
       heading: "Uma leitura rápida do cenário de exemplo.",
-      description: "Área reservada para indicadores, próximas vistorias e solicitações fictícias.",
+      description: "Indicadores, agenda proposta e solicitação fictícia no cenário de exemplo.",
       details: ["Indicadores demonstrativos", "Próximas vistorias", "Últimas solicitações"],
-      note: "Os indicadores e cartões administrativos serão detalhados na próxima etapa."
+      note: "Indicadores fictícios acompanham a confirmação visual desta sessão."
     },
     {
       id: "solicitacoes", number: "03", icon: "▤", title: "Solicitações e agenda", short: "Solicitações", eyebrow: "Organização",
       heading: "Do interesse do cliente ao agendamento pelo engenheiro.",
-      description: "Espaço previsto para um pedido com dois serviços, negociação ilustrativa e agenda demonstrativa.",
+      description: "Pedido com dois serviços, negociação ilustrativa, agenda e ficha do imóvel.",
       details: ["Dois serviços no mesmo pedido", "Negociação simulada", "Agenda ilustrativa"],
       note: "Nenhuma reserva, confirmação ou mensagem é enviada nesta demonstração."
     },
     {
       id: "vistoria", number: "04", icon: "☷", title: "Vistoria mobile", short: "Vistoria", eyebrow: "Em campo",
       heading: "Um fluxo pensado para uso no celular.",
-      description: "Área reservada para ambientes, categorias, checklist e constatações de exemplo.",
+      description: "Ambientes, modelos de checklist, evidências e conectividade exclusivamente simulada.",
       details: ["Sala, cozinha e banheiro", "Estrutura, elétrica e hidráulica", "Checklist ilustrativo"],
       note: "Fotos e modo offline serão apenas representações visuais, sem captura ou armazenamento."
     },
     {
       id: "planta", number: "05", icon: "◇", title: "Planta e constatações", short: "Planta", eyebrow: "Localização",
       heading: "Cada constatação no seu contexto.",
-      description: "Área reservada para um esquema de planta ilustrativo e uma lista textual de ocorrências.",
+      description: "Esquema ilustrativo com filtros de ambientes, marcadores e lista textual de ocorrências.",
       details: ["Esquema não arquitetônico", "Marcadores demonstrativos", "Alternativa textual"],
-      note: "A planta e os marcadores interativos serão desenhados em etapa posterior."
+      note: "Planta sem escala; o marcador temporário não integra o laudo fixo."
     },
     {
       id: "laudo", number: "06", icon: "▧", title: "Prévia do laudo", short: "Laudo", eyebrow: "Apresentação final",
       heading: "Uma prévia para discutir a leitura do documento.",
-      description: "Área reservada para uma composição visual de relatório, sem geração de arquivo ou validade técnica.",
+      description: "Prévia HTML fixa com identificação, método, evidências e conclusão ilustrativa.",
       details: ["Constatações de exemplo", "Evidências ilustrativas", "ART e assinatura: áreas reservadas"],
-      note: "O laudo de exemplo será criado depois; nenhuma ART ou assinatura é emitida."
+      note: "Documento fictício fixo, sem validade técnica, ART emitida ou assinatura."
     }
   ]
 };

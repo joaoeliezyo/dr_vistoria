@@ -22,6 +22,9 @@ Ler `AGENTS.md` e seguir, nesta ordem:
 - `prompts/01_SITE_E_PAINEL.md`
 - `prompts/02_VISTORIA_E_PLANTA.md`
 - `prompts/03_LAUDO_E_REVISAO.md`
+- `prompts/04_VISTORIA_AVANCADA.md`
+- `prompts/05_GESTAO_E_CLIENTE.md`
+- `prompts/06_REFINAMENTO_APRESENTACAO.md`
 
 Passe ao Codex o conteúdo integral de **um** prompt por vez. Analise o resultado antes de seguir.
 
@@ -30,24 +33,21 @@ Passe ao Codex o conteúdo integral de **um** prompt por vez. Analise o resultad
 - `docs/DESIGN-BRIEF.md`: linguagem visual
 - `docs/CENARIO-DEMO.md`: dados e roteiro da apresentação
 - `docs/CRITERIOS-ACEITE.md`: checklist de revisão
-- `docs/FORMULARIO-FEEDBACK.md`: guia para colher retorno do engenheiro
+- `docs/FORMULARIO-FEEDBACK.md`: formulário de retorno
+- `docs/ROTEIRO-APRESENTACAO.md`: roteiro final de 8–12 minutos
+- `docs/GUIA-VALIDACAO-ENGENHEIRO.md`: decisões do conceito e limites da validação
 - `docs/referencias/`: material original, preservado para a futura V1
 
 ## Nota
 Todo o conteúdo é fictício. Não inserir dados pessoais reais, documentos técnicos verdadeiros ou imagens que exponham clientes. O protótipo não gera laudos oficiais nem mantém registros de vistorias.
 
-## Roteiro para apresentação (5–8 minutos)
-1. No site, conhecer os seis serviços e abrir **Simular solicitação**; visualizar o resumo local e fechar.
-2. Pelo menu, abrir **Dashboard** e seguir para **Solicitações e agenda**.
-3. Conferir os dois serviços, a preferência do cliente e a negociação representada. Simular a confirmação pelo engenheiro e abrir a aba da agenda.
-4. Pelo menu, abrir **Vistoria mobile**, escolher Sala, Cozinha e Banheiro, marcar itens e abrir uma constatação. O botão de retorno leva à lista de ambientes.
-5. Seguir para a planta e explorar os marcadores A/B/C ou os botões da lista textual.
-6. Abrir a prévia do laudo pelo link ao fim da planta. Usar o índice para revisar capa, identificação e constatações.
+## Roteiro para apresentação (8–12 minutos)
+Siga `docs/ROTEIRO-APRESENTACAO.md`: landing → pedido com dois serviços → confirmação pelo engenheiro → ficha/histórico → modelos e evidência → planta → conectividade simulada → laudo fixo → documentos e prévia do cliente. Registre as decisões no `docs/GUIA-VALIDACAO-ENGENHEIRO.md` e no formulário de feedback.
 
 ## Limitações da demonstração
 Não há backend, autenticação, banco, armazenamento persistente, câmera, upload, envio de mensagem, sincronização, PDF, ART emitida ou assinatura real/digital. O modo offline é somente visual. As fotos foram geradas para demonstração; Sala e Cozinha usam placeholders de evidência. A planta não tem escala. Datas, nomes e registros são fictícios. O laudo reutiliza os registros fixos de `data.js`; marcar checklist ou editar observações não produz um documento.
 
-Para reiniciar o cenário, recarregue a página. O protótipo funciona com arquivos locais e não requer internet. Capturas e relatórios de revisão estão em `artifacts/prompt-03/`. A revisão final para apresentação depende do retorno do engenheiro em `docs/FORMULARIO-FEEDBACK.md`.
+Para reiniciar o cenário, recarregue a página. O protótipo funciona com arquivos locais e não requer internet. Capturas e relatório finais estão em `artifacts/prompt-06/VERIFICACAO.md`; evidências das etapas anteriores foram preservadas. A revisão final para apresentação depende do retorno do engenheiro em `docs/FORMULARIO-FEEDBACK.md`.
 
 ## Extensão demonstrativa — Prompt 04
 Na Vistoria, **Configurar checklist** permite alternar entre os modelos de entrega de imóvel e inspeção predial, incluir um item personalizado e ativar/desativar itens apenas na sessão. As respostas e observações ficam separadas por modelo. O modelo predial é um exemplo de configuração; não altera os serviços do pedido fictício.
@@ -67,4 +67,13 @@ A relação documental mostra **Prévia disponível** (laudo HTML fixo), **Não 
 
 Não há login, autorização, link público, token, envio, compartilhamento seguro, upload, download, documento real ou persistência. A prévia não representa segurança implementada. Todas as entidades e relações vêm de `data.js`; a confirmação e as seções são estados locais, reiniciados ao recarregar. Os modelos de checklist, anotação fotográfica, filtros e marcador temporário do Prompt 04 permanecem demonstrativos; o laudo não acompanha suas edições.
 
-Capturas e relatório desta etapa: `artifacts/prompt-05/VERIFICACAO.md`. Validar com o engenheiro os campos da ficha, a leitura do histórico, os estados documentais e o conteúdo que faria sentido apresentar ao cliente. O Prompt 06 não faz parte desta entrega.
+Capturas e relatório desta etapa: `artifacts/prompt-05/VERIFICACAO.md`. Validar com o engenheiro os campos da ficha, a leitura do histórico, os estados documentais e o conteúdo que faria sentido apresentar ao cliente. Esta etapa foi concluída antes do refinamento final do Prompt 06.
+
+## Apresentação final — Prompt 06
+Na Vistoria, o painel **Demonstração de conectividade** começa recolhido e em **Sem conexão (simulado)**. Abra **Explorar fila fictícia · 4 exemplos**. O seletor escolhe qualquer estado ilustrativo; o botão principal percorre sem conexão → quatro pendências → sincronizando → concluído. Em sincronizando, **Demonstrar falha na fotografia** mostra um erro e três pendências; **Tentar novamente (simulação)** retorna à sincronização visual. Cada transição exige um clique, sem detecção de rede ou temporizadores.
+
+O aviso **SIMULAÇÃO — nenhum dado está sendo enviado** permanece visível, inclusive na conclusão. A fila usa quatro exemplos fixos, independentes dos itens avaliados e das observações digitadas. Não existe retenção offline, armazenamento, envio real ou atualização de laudo, ART ou documentos. Concluir a simulação não conclui a avaliação nem declara conformidade técnica.
+
+**Restaurar conectividade simulada** reinicia somente o painel, sem apagar avaliações; **Restaurar cenário** reinicia toda a demonstração de campo e recolhe o painel. Recarregar reinicia todos os estados. O protótipo continua em HTML/CSS/JS local, sem build ou dependências de rede; abra `prototype/index.html` ou use o servidor estático opcional descrito acima.
+
+A etapa final prepara a validação do conceito, sem iniciar a V1. Ainda é necessário colher o retorno do engenheiro e conferir a apresentação em aparelho físico e com leitor de tela. Não há backend, banco, autenticação, câmera, upload, PWA, sincronização, PDF, ART ou assinatura reais.
