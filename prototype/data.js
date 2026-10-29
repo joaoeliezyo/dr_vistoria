@@ -7,12 +7,41 @@ window.demoData = {
     location: "Bairro Exemplo",
     request: "Solicitação DEMO-001",
     services: ["Vistoria de entrega de imóvel", "Laudo técnico ilustrativo"],
+    preference: "Período da manhã, sujeito à conversa com o engenheiro",
+    suggestedDate: "18 de junho · data demonstrativa",
+    suggestedTime: "09h · horário ilustrativo",
+    calendar: { month: "Junho", days: [15, 16, 17, 18, 19, 20, 21], proposedDay: 18 },
     environments: ["Sala", "Cozinha", "Banheiro"],
     categories: ["Estrutura", "Elétrica", "Hidráulica"],
     findings: [
       "Infiltração ilustrativa na parede do banheiro",
       "Tomada sem acabamento na sala",
       "Fissura superficial ilustrativa na cozinha"
+    ]
+  },
+  site: {
+    heroEyebrow: "Engenharia residencial · apresentação ilustrativa",
+    heroTitle: "Mais clareza para decisões sobre o seu imóvel.",
+    heroDescription: "Vistorias, inspeções e análises técnicas apresentadas com método, atenção aos detalhes e linguagem acessível. Conheça uma proposta visual para esse atendimento.",
+    services: [
+      { number: "01", title: "Vistoria cautelar", description: "Registro visual das condições do imóvel antes de uma intervenção próxima.", icon: "◫" },
+      { number: "02", title: "Inspeção predial", description: "Leitura organizada de sistemas, conservação e pontos de atenção.", icon: "▦" },
+      { number: "03", title: "Vistoria de entrega de imóvel", description: "Conferência ilustrativa de ambientes e acabamentos na entrega.", icon: "⌂" },
+      { number: "04", title: "Vistoria para locação", description: "Descrição das condições aparentes para entrada ou saída do imóvel.", icon: "▤" },
+      { number: "05", title: "Avaliação técnica", description: "Análise orientada por objetivo e contexto apresentados pelo cliente.", icon: "◇" },
+      { number: "06", title: "Laudo técnico", description: "Organização de constatações e evidências em documento de exemplo.", icon: "▧" }
+    ],
+    process: [
+      { number: "01", title: "Conte o que precisa", description: "O cliente informa o imóvel, os serviços de interesse e sua preferência de período." },
+      { number: "02", title: "Alinhe o atendimento", description: "O engenheiro avalia o pedido e negocia detalhes antes de propor a agenda." },
+      { number: "03", title: "Acompanhe a vistoria", description: "Após a confirmação pelo engenheiro, o trabalho segue para registro e apresentação técnica." }
+    ]
+  },
+  dashboard: {
+    metrics: [
+      { label: "Solicitações", value: "01", caption: "pedido fictício no cenário" },
+      { label: "Em negociação", value: "01", caption: "etapa comercial ilustrativa" },
+      { label: "Agenda confirmada", value: "00", caption: "antes da ação demonstrativa" }
     ]
   },
   areas: [
