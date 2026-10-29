@@ -1,0 +1,63 @@
+/* Refinamento tipográfico — demo visual dr_vistoria.
+   Não exige carregamento externo de fontes. */
+:root {
+  font-family: Inter, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+body, button, input, select, textarea { font-family: Inter, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+body { line-height: 1.55; }
+p, li, dd, label { line-height: 1.65; }
+
+/* Elementos de navegação */
+.nav-link, .topbar-title strong, .brand-caption, .sidebar-foot p { font-size: 14px; }
+.brand small, .eyebrow, .section-index, .site-kicker, .breadcrumb, .demo-label,
+.sidebar-foot-label, .nav-number, .mini-tag, .site-photo-note,
+.report-edition, .report-chapter { font-size: 12px; }
+.brand strong { font-size: 19px; }
+.button, .menu-button, .site-mast-links button, .service-card button,
+.text-link, .report-index button { font-size: 14px; }
+
+/* Site e administração */
+.site-hero-content > p, .hero-copy p, .site-intro p, .site-section-head > p,
+.site-about p, .site-process p, .site-cta p, .service-card p,
+.page-heading p, .panel-card p, .request-disclaimer,
+.field-meta, .field-callout { font-size: 15px; }
+.service-card h3, .panel-head h2 { font-size: 20px; }
+.metric-card > span, .metric-card small, .entity-grid small,
+.request-tabs button, .request-dialog label, .request-dialog legend,
+.request-dialog input, .request-dialog select, .calendar-days,
+.agenda-date span { font-size: 14px; }
+.page-heading h1 { line-height: 1.17; }
+
+/* Vistoria: prioridades de legibilidade em campo */
+.offline-demo, .field-progress span, .room-card > span:nth-child(3),
+.field-callout, .field-notes, .field-checks label span span,
+.finding-choice small, .field-evidence figcaption,
+.finding-detail > p, #room-finding > p, .field-list-title { font-size: 14px; }
+.field-progress strong, .field-checks strong, .finding-choice strong { font-size: 16px; }
+.room-card strong { font-size: 19px; }
+.field-notes textarea { font-size: 16px; line-height: 1.6; }
+.floor-drawing text { font: 14px Inter, "Segoe UI", Arial, sans-serif; }
+
+/* Prévia do laudo */
+.report-running, .report-foot, .report-facts dt, .report-reserved span,
+.report-finding-heading p { font-size: 12px; }
+.report-sheet p, .report-facts dd, .report-room-list li,
+.report-reserved p, .report-warning { font-size: 14px; line-height: 1.7; }
+.report-sheet h3 { font-size: 18px; }
+.report-sheet h2 { line-height: 1.19; }
+.report-index button { font-size: 13px; }
+
+@media (max-width: 700px) {
+  .site-hero-content > p, .site-section-head > p, .site-about p,
+  .site-intro p, .service-card p, .page-heading p { font-size: 15px; }
+  .request-tabs button, .calendar-days small { font-size: 12px; }
+  .nav-link, .demo-label { font-size: 13px; }
+  .report-sheet p, .report-facts dd, .report-reserved p { font-size: 14px; }
+  .report-running, .report-foot { font-size: 11px; }
+  .report-warning { font-size: 12px; }
+  .report-index button { font-size: 12px; }
+  .report-cover h2 { font-size: clamp(34px, 9vw, 43px); }
+}

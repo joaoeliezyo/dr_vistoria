@@ -21,6 +21,20 @@ window.demoData = {
   },
   inspection: {
     id: "Vistoria DEMO-001",
+    checklistModels: [
+      { id: "entrega", service: "Vistoria de entrega de imóvel", items: [
+        { id: "paredes", category: "Estrutura", label: "Observar paredes, piso e revestimentos" },
+        { id: "tomadas", category: "Elétrica", label: "Observar acabamento aparente das tomadas" },
+        { id: "umidade", category: "Hidráulica", label: "Observar sinais aparentes de umidade" }
+      ] },
+      { id: "predial", service: "Inspeção predial", items: [
+        { id: "conservacao", category: "Estrutura", label: "Registrar conservação aparente das superfícies" },
+        { id: "instalacoes", category: "Elétrica", label: "Registrar condições visuais das instalações acessíveis" },
+        { id: "tubulacoes", category: "Hidráulica", label: "Observar tubulações aparentes e sinais de vazamento" }
+      ] }
+    ],
+    temporaryFinding: { id: "D", room: "Sala", category: "Demonstração", title: "Marcador temporário de exemplo", description: "Posição fictícia adicionada apenas para explorar a interface. Não corresponde a uma constatação técnica e não integra o laudo fixo.", location: "Ponto ilustrativo da sala", image: null, x: 38, y: 65 },
+    annotation: "Destaque ilustrativo da região de descascamento acima dos azulejos. Não é diagnóstico nem medição.",
     checks: [
       { category: "Estrutura", label: "Observar paredes, piso e revestimentos" },
       { category: "Elétrica", label: "Observar acabamento aparente das tomadas" },

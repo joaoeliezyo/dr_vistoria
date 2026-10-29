@@ -48,3 +48,12 @@ Todo o conteúdo é fictício. Não inserir dados pessoais reais, documentos té
 Não há backend, autenticação, banco, armazenamento persistente, câmera, upload, envio de mensagem, sincronização, PDF, ART emitida ou assinatura real/digital. O modo offline é somente visual. As fotos foram geradas para demonstração; Sala e Cozinha usam placeholders de evidência. A planta não tem escala. Datas, nomes e registros são fictícios. O laudo reutiliza os registros fixos de `data.js`; marcar checklist ou editar observações não produz um documento.
 
 Para reiniciar o cenário, recarregue a página. O protótipo funciona com arquivos locais e não requer internet. Capturas e relatórios de revisão estão em `artifacts/prompt-03/`. A revisão final para apresentação depende do retorno do engenheiro em `docs/FORMULARIO-FEEDBACK.md`.
+
+## Extensão demonstrativa — Prompt 04
+Na Vistoria, **Configurar checklist** permite alternar entre os modelos de entrega de imóvel e inspeção predial, incluir um item personalizado e ativar/desativar itens apenas na sessão. As respostas e observações ficam separadas por modelo. O modelo predial é um exemplo de configuração; não altera os serviços do pedido fictício.
+
+O progresso geral e por ambiente considera somente itens ativos e avaliados. **Não avaliado**, **Em andamento** e **Concluído** indicam preenchimento, nunca conformidade técnica. Desativar um item retira-o do cálculo; reativar recupera sua resposta na sessão. **Restaurar cenário** reinicia modelos, respostas, observações, filtros, anotação e marcador temporário.
+
+Na constatação A, **Original / Anotada** alterna uma sobreposição ilustrativa com descrição textual, preservando o arquivo da fotografia. Na planta, o filtro por ambiente mantém marcadores e lista textual equivalentes. O botão de marcador temporário inclui um único ponto D na Sala e oferece desfazer; adicioná-lo seleciona a Sala para deixá-lo visível. Nada disso modifica o laudo HTML: ele continua representando o cenário fixo A/B/C.
+
+Não há editor de imagens, diagnóstico, captura, upload, armazenamento ou sincronização. Recarregar apaga as alterações. Capturas e verificações desta etapa estão em `artifacts/prompt-04/`; histórico, portal de cliente e novos estados de sincronização ficam fora desta etapa.
